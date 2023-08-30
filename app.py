@@ -3,7 +3,6 @@ import json
 import ast
 import os
 from typing import List
-import lightgbm as lgb
 
 from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
@@ -19,10 +18,14 @@ import catboost
 import hashlib
 
 ### Connections etc.
-
-SQLALCHEMY_DATABASE_URL = "postgresql://robot-startml-ro:pheiph0hahj1Vaif@postgres.lab.karpov.courses:6432/startml"
-
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
+def get_database_url() -> str:
+    db_url = os.getenv("DATABASE_URL")
+    if db_url is None:
+        raise Exception("Can not find env 'DATABASE_URL'")
+    else:
+        return db_url
+    
+engine = create_engine(get_database_url())
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 conn_full = engine.connect().execution_options(stream_results=False)
 
@@ -61,15 +64,11 @@ class PostGet:
         self.text = text
         self.topic = topic
 
-def get_model_path(path: str) -> str:
-    if os.environ.get("IS_LMS") == "1":
-        MODEL_PATH = '/workdir/user_input/model' # Need this to submit file to learning management system
-    else:
-        MODEL_PATH = path
-    return MODEL_PATH
+def get_model_path() -> str:
+    return os.getenv("MODEL_PATH", "model")
 
 def load_models():
-    model_path = get_model_path("model")
+    model_path = get_model_path()
     model = CatBoostClassifier()
     model.load_model(model_path)
     return model
@@ -186,7 +185,3 @@ def recommended_posts(
         recommended_posts.append(post)
 
     return recommended_posts
-
-# # app definition
-# if __name__ == "main":
-#     uvicorn.run(app, host="0.0.0.0", port=8000)~

@@ -6,3 +6,5 @@ pydantic==1.10.6
 loguru==0.5.3
 psycopg2==2.9.6
 scikit-learn==1.2.2
+catboost==1.2
+python-dotenv==1.0.0
