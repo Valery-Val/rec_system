@@ -14,6 +14,13 @@ Upon launching the application, all post data is fetched. Using the trained mode
 #### Prerequisites
 Ensure you have all the essential libraries installed. You can refer to the `requirements.txt` file for a comprehensive list. The model file is also included in the repository.
 
+#### Launching Jupyter Notebook
+Use the following command to launch Jupyter Notebook from terminal:
+
+```
+cmd /C "set DATABASE_URL=<URL to your database>&& set MODEL_PATH=<path to your model>&& jupyter notebook"
+```
+
 #### Launching the Application
 The application utilizes uvicorn for execution. Use the following command to run the app:
 
