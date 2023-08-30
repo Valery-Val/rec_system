@@ -4,7 +4,7 @@ The task was to build recommendation system for social network which would sugge
 The project consists of two parts:
 1. Jupyter notebook with all the steps of training model.
 2. Service to give recommendations.
-3. 
+
 #### Training model
 Jupyter notebook ('training_model.ipynb') contains all the steps including both EDA and training part.
 Feature engineering part includes using language model (BERT) to create embeddings for post texts.
@@ -19,6 +19,7 @@ The system gets 5 posts with highest probability of the first class (meaning the
 1. Make sure you have all the necessary libraries installed. Check 'requirements.txt' file.
 2. File with model is attached.
 3. To run the application uvicorn is used:
+   
    ```
    cmd /C "set DATABASE_URL=<url to connect the database>&& set MODEL_PATH=<path to model>&& uvicorn app:app --port 8899"
    ```
